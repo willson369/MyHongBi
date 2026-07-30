@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>红笔 · 视频一键变小红书爆款</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css?v=6" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="#top">
+      <span class="brand-mark">红</span>
+      <span class="brand-text">红笔 Hongbi</span>
+    </a>
+    <div class="nav-links">
+      <a href="#workspace">开始创作</a>
+      <a href="#templates">品类模板</a>
+      <a href="#value">为什么付费</a>
+    </div>
+    <div class="nav-right">
+      <span id="api-pill" class="api-pill">检测配置中…</span>
+      <a class="btn-nav" href="#workspace">免费生成</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <p class="eyebrow">提炼主旨 → 学爆款结构 → 小红书纯文本笔记</p>
+      <h1>视频一键变小红书爆款，<span class="accent">网感分看得见</span></h1>
+      <p class="hero-sub">不是复述口播，也不是 Markdown 文档。红笔先提炼视频主旨，再按品类爆款模板写成能直接发的笔记。</p>
+      <div class="hero-search">
+        <input id="hero-url" type="text" placeholder="粘贴抖音 / B站 / YouTube / 小红书视频链接…" />
+        <button class="btn-primary" onclick="jumpToWorkspace()">开始生成</button>
+      </div>
+      <div class="hero-tags">
+        <span>职场吐槽</span>
+        <span>种草带货</span>
+        <span>干货知识</span>
+        <span>10 套施工模板</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="value-strip" id="value">
+    <div class="value-card">
+      <h3>先提炼主旨</h3>
+      <p>从嘈杂口播里抽出场景、矛盾、可写要点，再开写。</p>
+    </div>
+    <div class="value-card">
+      <h3>按模板施工</h3>
+      <p>每套模板有结构步骤、语气、爆款范文，不是空壳标签。</p>
+    </div>
+    <div class="value-card">
+      <h3>小红书预览</h3>
+      <p>手机笔记卡直出标题/正文/标签，可一键复制发帖。</p>
+    </div>
+  </section>
+
+  <section class="workspace" id="workspace">
+    <div class="workspace-grid">
+      <aside class="panel control-panel">
+        <h2>创作台</h2>
+        <label class="field-label">视频链接</label>
+        <input id="single-url" class="field" type="text" placeholder="https://..." />
+
+        <label class="field-label">笔记品类</label>
+        <div class="seg seg-wrap" id="category-seg"></div>
+
+        <div id="tpl-blueprint" class="tpl-blueprint">
+          <img id="tpl-bp-cover" class="tpl-bp-cover" alt="" hidden />
+          <div class="tpl-bp-head">
+            <strong id="tpl-bp-name">职场吐槽</strong>
+            <span id="tpl-bp-tone">真实、克制吐槽</span>
+          </div>
+          <ol id="tpl-bp-steps" class="tpl-bp-steps"></ol>
+          <div class="tpl-bp-example">
+            <div class="tpl-bp-label">爆款范文节选</div>
+            <p id="tpl-bp-title" class="tpl-bp-title"></p>
+            <p id="tpl-bp-body" class="tpl-bp-body"></p>
+          </div>
+        </div>
+
+        <label class="field-label">我的爆款参考（可选）</label>
+        <textarea id="style-ref" class="field area" placeholder="粘贴 1 条你自己的爆款笔记，红笔会模仿语气（不照抄）"></textarea>
+
+        <div class="checks">
+          <label><input type="checkbox" id="gen-xiaohongshu" checked /> 生成小红书图文（笔记+配图）</label>
+          <label hidden><input type="checkbox" id="gen-blog" /> 额外生成博客长文</label>
+        </div>
+
+        <button class="btn-primary block" id="btn-generate" onclick="processSingle()">一键生成爆款笔记</button>
+        <button type="button" class="btn-ghost block" onclick="showLatestImages()">先看上次配图</button>
+        <p class="hint">右侧显示「UI v5」。结果是小红书笔记卡，不是 Markdown。</p>
+
+        <div id="single-progress" class="progress-box" hidden>
+          <div class="progress-track"><div class="progress-fill" id="single-progress-bar"></div></div>
+          <p id="single-status">处理中…</p>
+        </div>
+      </aside>
+
+      <main class="panel preview-panel">
+        <div class="preview-head">
+          <h2>预览结果 <span class="ui-tag">UI v5</span></h2>
+          <div class="score-badge" id="score-badge" hidden>
+            <span class="score-num" id="score-num">--</span>
+            <span class="score-grade" id="score-grade">网感分</span>
+          </div>
+        </div>
+        <div id="single-result" class="preview-body empty-state">
+          <div class="empty-illu"></div>
+          <h3>还没有笔记</h3>
+          <p>左侧选品类（会展开模板施工图），粘贴视频链接后生成。这里会显示手机笔记卡和真实截帧。</p>
+        </div>
+        <div id="tips-box" class="tips-box" hidden></div>
+      </main>
+    </div>
+  </section>
+
+  <section class="templates" id="templates">
+    <div class="section-head">
+      <h2>10 套品类施工模板</h2>
+      <p>点卡片即可选用。每套都有结构步骤 + 爆款范文，不是空空的色块。</p>
+    </div>
+    <div class="template-grid" id="template-grid"></div>
+  </section>
+
+  <section class="paywall-teaser">
+    <div class="pay-inner">
+      <h2>想要更多版本与更高网感？</h2>
+      <p>Pro 将解锁：更多备选标题、风格参考增强、批量处理、封面文案建议。（本期先展示价值，支付后续接入）</p>
+      <button class="btn-primary" onclick="showToast('支付能力后续接入，当前可免费完整体验核心流程','info')">查看 Pro 方案</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><strong>红笔 Hongbi</strong> · 基于开源 Video_note_generator 增强 · 本地轻量运行</p>
+    <p>支持平台：抖音 / B站 / YouTube / 小红书等（需配置 Cookies 时按文档操作）</p>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+  <script>console.log("[红笔] UI v5 · 主旨提炼 + 模板施工 + 笔记卡预览");</script>
+  <script src="/static/js/app.v5.js?v=20260730c"></script>
+</body>
+</html>
