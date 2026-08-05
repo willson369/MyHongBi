@@ -264,3 +264,12 @@ tools/ffmpeg*.zip
 *.pyc
 .DS_Store
 
+
+# Large local tool archives / extracts (keep one working ffmpeg locally)
+tools/ffmpeg.zip
+tools/ffmpeg_extract/
+tools/**/doc/
+
+# Local cleanup / fetch helpers
+scripts/fetch_template_covers.py
+scripts/fix_study_cover.py

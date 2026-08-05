@@ -1,0 +1,24 @@
+﻿# Full-stack Hongbi (API + ffmpeg). Secrets via env — never commit .env
+services:
+  hongbi:
+    build: .
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    environment:
+      - PORT=8001
+      - FFMPEG_PATH=/usr/bin/ffmpeg
+      - OUTPUT_DIR=/app/generated_notes
+      - CACHE_DIR=/app/.cache
+      - LOG_DIR=/app/logs
+    volumes:
+      - hongbi_notes:/app/generated_notes
+      - hongbi_cache:/app/.cache
+      - hongbi_logs:/app/logs
+    restart: unless-stopped
+
+volumes:
+  hongbi_notes:
+  hongbi_cache:
+  hongbi_logs:

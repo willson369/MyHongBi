@@ -1,0 +1,21 @@
+﻿# .dockerignore — keep image small; never ship secrets / venv / local ffmpeg
+.git
+.gitignore
+venv
+.env
+.env.*
+!.env.example
+__pycache__
+*.pyc
+.cache
+generated_notes
+logs
+tools
+_upstream
+*.md
+!README.md
+docs
+scripts
+*.bat
+*.sh
+.pytest_cache
